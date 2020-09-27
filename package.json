@@ -1,7 +1,7 @@
 {
   "name": "table-dnd-tree",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -10,16 +10,34 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "mobx": "^5.15.7",
+    "mobx-react": "^6.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.11.0",
     "react-scripts": "3.4.3",
+    "react-use": "^15.3.4",
+    "styled-components": "^5.2.0",
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "cross-env react-scripts start",
+    "build": "cross-env react-scripts build",
+    "test": "cross-env react-scripts test",
+    "eject": "react-scripts eject",
+    "typesync": "typesync"
+  },
+  "prettier": {},
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +53,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "mobx-remotedev": "^0.3.6",
+    "prettier": "^2.1.2",
+    "typesync": "^0.7.0"
   }
 }
