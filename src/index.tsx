@@ -6,7 +6,8 @@ import { App } from "./App";
 
 //css
 // import "./index.css";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>

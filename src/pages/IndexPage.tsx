@@ -1,11 +1,14 @@
-import React from "react";
-import { Layout, Row, Col } from "antd";
-import { Table } from "../components/Table";
-
+import React, { Fragment } from "react";
+import { Container, Row, Col } from "../components/react-bootstrap";
+import { TableContainer } from "../containers/TableContainer";
 export const IndexPage = () => {
   return (
-    <Layout>
-      <Table />
-    </Layout>
+    <Fragment>
+      <Container fluid>
+        <Row>
+          <TableContainer />
+        </Row>
+      </Container>
+    </Fragment>
   );
 };
