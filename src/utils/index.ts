@@ -1,3 +1,5 @@
+import { IData } from "../types";
+
 type IMoveArrayItemsParams = {
   array: any[];
   /**

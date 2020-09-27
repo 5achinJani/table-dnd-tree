@@ -1,8 +1,9 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { IData } from "../types";
 import { Table, Row } from "../components/react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { IDataRow } from "../types";
+import { moveArrayElements } from "../utils";
 
 import {
   AiOutlineDrag,
@@ -40,13 +41,50 @@ export const TableContainer = () => {
 
   useMount(() => {});
 
+  useEffect(() => {
+    console.log("on state(data) update");
+    console.log(data);
+  }, [data]);
+
   const onChange = ({ index, value }: { index: number; value: string }) => {
     const cloned_data = [...data];
     cloned_data[index].body = value;
     setData(cloned_data);
   };
 
-  const onDragEnd = () => {};
+  const onDelete = ({ index }: { index: number }) => {};
+
+  const onIndent = ({ index }: { index: number }) => {
+    const cloned_data = [...data];
+    cloned_data[index].indent = cloned_data[index].indent + 1;
+    setData(cloned_data);
+  };
+
+  const onOutdent = ({ index }: { index: number }) => {
+    if (data[index].indent == 0) {
+      return;
+    }
+
+    const cloned_data = [...data];
+    cloned_data[index].indent = cloned_data[index].indent - 1;
+    setData(cloned_data);
+  };
+
+  const onDragEnd = (result: {
+    source: { index: number };
+    destination: { index: number };
+  }) => {
+    if (!result.destination) {
+      return;
+    }
+
+    // const updated_array = moveArrayElements({
+    //   array: data,
+    //   source_from_index: 0,
+    //   source_to_index: 0,
+    //   target_index: 0,
+    // });
+  };
 
   return (
     <Fragment>
@@ -95,34 +133,68 @@ export const TableContainer = () => {
                           className="d-flex"
                         >
                           <td className="col-1">
-                            <span {...provided.dragHandleProps}>
-                              <AiOutlineDrag title="Move" />
-                            </span>
-                            <AiOutlineArrowLeft
-                              title="Outdent"
-                              className="ml-3"
-                              style={{ cursor: "pointer" }}
-                            />
-                            <AiOutlineArrowRight
-                              title="Indent"
-                              className="ml-3"
-                              style={{ cursor: "pointer" }}
-                            />
-                            <AiOutlineDelete
-                              title="Delete"
-                              className="ml-3"
-                              style={{ cursor: "pointer" }}
-                            />
+                            <div className="d-flex justify-content-around align-items-center">
+                              <div className="" {...provided.dragHandleProps}>
+                                <AiOutlineDrag title="Move" />
+                              </div>
+
+                              <div
+                                className=""
+                                role="button"
+                                title="Outdent"
+                                onClick={() => {
+                                  onOutdent({ index });
+                                }}
+                              >
+                                <AiOutlineArrowLeft />
+                              </div>
+
+                              <div
+                                className=""
+                                role="button"
+                                title="Indent"
+                                onClick={() => {
+                                  onIndent({ index });
+                                }}
+                              >
+                                <AiOutlineArrowRight />
+                              </div>
+
+                              <div
+                                className=""
+                                role="button"
+                                title="Delete"
+                                onClick={() => {}}
+                              >
+                                <AiOutlineDelete />
+                              </div>
+                            </div>
                           </td>
+
                           <td className="col-11">
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={row.body}
-                              onChange={(event) => {
-                                onChange({ index, value: event.target.value });
-                              }}
-                            />
+                            <div className="h-100 w-25 d-flex justify-content-around align-items-center">
+                              <div
+                                className="h-100 d-flex justify-content-center align-items-center"
+                                style={{
+                                  width: "40px",
+                                  backgroundColor: "ghostwhite",
+                                }}
+                              >
+                                -
+                              </div>
+                              <input
+                                type="text"
+                                className="form-control"
+                                style={{ border: "none" }}
+                                value={row.body}
+                                onChange={(event) => {
+                                  onChange({
+                                    index,
+                                    value: event.target.value,
+                                  });
+                                }}
+                              />
+                            </div>
                           </td>
                         </tr>
                       )}
