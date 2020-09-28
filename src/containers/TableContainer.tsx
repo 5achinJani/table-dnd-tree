@@ -3,7 +3,7 @@ import { IData } from "../types";
 import { Table, Row } from "../components/react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { IDataRow } from "../types";
-import { moveArrayElements } from "../utils";
+import { getSourceValues, moveArrayElements } from "../utils";
 
 import {
   AiOutlineDrag,
@@ -15,23 +15,33 @@ import { useMount } from "react-use";
 
 const dataSource = [
   {
-    id: "1",
+    id: "0",
     body: "Mike",
     indent: 0,
   },
   {
-    id: "2",
+    id: "1",
     body: "John",
     indent: 0,
   },
   {
+    id: "2",
+    body: "Cena",
+    indent: 1,
+  },
+  {
     id: "3",
-    body: "Test",
-    indent: 0,
+    body: "Cena1",
+    indent: 2,
   },
   {
     id: "4",
     body: "Sachin",
+    indent: 0,
+  },
+  {
+    id: "5",
+    body: "Max",
     indent: 0,
   },
 ];
@@ -52,7 +62,24 @@ export const TableContainer = () => {
     setData(cloned_data);
   };
 
-  const onDelete = ({ index }: { index: number }) => {};
+  const onDelete = ({ index }: { index: number }) => {
+    const { source_from_index, source_to_index } = getSourceValues({
+      array: data,
+      source_from_index: index,
+    });
+
+    const updated_data = data.filter((value, index) => {
+      if (index >= source_from_index && index <= source_to_index) {
+        return false;
+      }
+
+      return true;
+    });
+
+    setData(updated_data);
+
+    //console.log({ updated_data });
+  };
 
   const onIndent = ({ index }: { index: number }) => {
     const cloned_data = [...data];
@@ -164,7 +191,9 @@ export const TableContainer = () => {
                                 className=""
                                 role="button"
                                 title="Delete"
-                                onClick={() => {}}
+                                onClick={() => {
+                                  onDelete({ index });
+                                }}
                               >
                                 <AiOutlineDelete />
                               </div>
@@ -180,7 +209,7 @@ export const TableContainer = () => {
                                   backgroundColor: "ghostwhite",
                                 }}
                               >
-                                -
+                                {row.indent}
                               </div>
                               <input
                                 type="text"

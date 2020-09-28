@@ -53,3 +53,27 @@ export const moveArrayElements = (params: IMoveArrayItemsParams) => {
   console.log(res);
   return res;
 };
+
+/**
+ *
+ * @returns the index of source(source_from_index) and its last child(source_to_index)
+ */
+export const getSourceValues = ({
+  source_from_index,
+  array,
+}: {
+  source_from_index: number;
+  array: IData;
+}) => {
+  let source_to_index: number = source_from_index;
+  for (let index = source_from_index + 1; index < array.length; index++) {
+    const element = array[index];
+
+    if (element.indent <= array[source_from_index].indent) {
+      break;
+    } else {
+      source_to_index = index;
+    }
+  }
+  return { source_from_index, source_to_index };
+};
