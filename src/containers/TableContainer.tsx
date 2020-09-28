@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { IData } from "../types";
-import { Table, Row } from "../components/react-bootstrap";
+import { Table, Row, Button } from "../components/react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { IDataRow } from "../types";
 import {
@@ -15,7 +15,9 @@ import {
   AiOutlineArrowRight,
   AiOutlineDelete,
 } from "react-icons/ai";
+import { MdAddCircleOutline } from "react-icons/md";
 import { useMount } from "react-use";
+import cuid from "cuid";
 
 const dataSource = [
   {
@@ -56,9 +58,22 @@ export const TableContainer = () => {
   useMount(() => {});
 
   useEffect(() => {
-    console.log("on state(data) update");
-    console.log(data);
+    //console.log("on state(data) update");
+    //console.log(data);
   }, [data]);
+
+  const onAdd = () => {
+    const lastItem = data[data.length - 1];
+    const indent = lastItem?.indent || 0;
+    const id = cuid();
+    const row = {
+      id,
+      indent,
+      body: "",
+    };
+    const updated_data = [...data, row];
+    setData(updated_data);
+  };
 
   const onChange = ({ index, value }: { index: number; value: string }) => {
     const cloned_data = [...data];
@@ -142,6 +157,7 @@ export const TableContainer = () => {
           {(provided, snapshot) => (
             <Table
               hover
+              responsive
               ref={provided.innerRef}
               style={{ width: "100%", tableLayout: "fixed" }}
             >
@@ -224,7 +240,6 @@ export const TableContainer = () => {
 
                           <td className="col-11">
                             <div
-                              title="indent size"
                               style={{
                                 paddingLeft: getPaddingByIndent({
                                   indent: row.indent,
@@ -233,6 +248,7 @@ export const TableContainer = () => {
                               className="h-100 w-25 d-flex justify-content-around align-items-center"
                             >
                               <div
+                                title="indent size"
                                 className="h-100 d-flex justify-content-center align-items-center"
                                 style={{
                                   width: "40px",
@@ -263,6 +279,19 @@ export const TableContainer = () => {
 
                 {provided.placeholder}
               </tbody>
+              <tfoot>
+                <tr className="col-12 d-flex justify-content-center align-items-center">
+                  <Button
+                    variant="primary"
+                    className="d-flex justify-content-center align-items-center btn-block"
+                    onClick={() => {
+                      onAdd();
+                    }}
+                  >
+                    <MdAddCircleOutline className="mr-1" /> Add Standard
+                  </Button>
+                </tr>
+              </tfoot>
             </Table>
           )}
         </Droppable>
