@@ -3,7 +3,11 @@ import { IData } from "../types";
 import { Table, Row } from "../components/react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { IDataRow } from "../types";
-import { getSourceValues, moveArrayElements } from "../utils";
+import {
+  getPaddingByIndent,
+  getSourceValues,
+  moveArrayElements,
+} from "../utils";
 
 import {
   AiOutlineDrag,
@@ -104,13 +108,31 @@ export const TableContainer = () => {
     if (!result.destination) {
       return;
     }
+    const {
+      source: { index: source_index },
+      destination: { index: destination_index },
+    } = result;
 
-    // const updated_array = moveArrayElements({
-    //   array: data,
-    //   source_from_index: 0,
-    //   source_to_index: 0,
-    //   target_index: 0,
-    // });
+    console.log({ source_index, destination_index });
+    if (source_index == destination_index) {
+      return;
+    }
+
+    const { source_from_index, source_to_index } = getSourceValues({
+      array: data,
+      source_from_index: source_index,
+    });
+
+    console.log({ source_from_index, source_to_index });
+
+    const updated_array = moveArrayElements({
+      array: data,
+      source_from_index,
+      source_to_index,
+      target_index: destination_index,
+    });
+    console.log(updated_array);
+    setData(updated_array);
   };
 
   return (
@@ -201,7 +223,15 @@ export const TableContainer = () => {
                           </td>
 
                           <td className="col-11">
-                            <div className="h-100 w-25 d-flex justify-content-around align-items-center">
+                            <div
+                              title="indent size"
+                              style={{
+                                paddingLeft: getPaddingByIndent({
+                                  indent: row.indent,
+                                }),
+                              }}
+                              className="h-100 w-25 d-flex justify-content-around align-items-center"
+                            >
                               <div
                                 className="h-100 d-flex justify-content-center align-items-center"
                                 style={{

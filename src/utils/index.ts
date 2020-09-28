@@ -23,6 +23,12 @@ export const moveArrayElements = (params: IMoveArrayItemsParams) => {
     source_from_index,
     source_to_index,
   } = params;
+  if (target_index >= source_from_index && target_index <= source_to_index) {
+    console.log(
+      "moving parent in child while preserving parent-child realtion is not allowed"
+    );
+    return array;
+  }
   if (source_from_index == target_index && source_to_index == target_index) {
     console.log("All same");
     return array;
@@ -50,7 +56,7 @@ export const moveArrayElements = (params: IMoveArrayItemsParams) => {
 
     return acc;
   }, []);
-  console.log(res);
+  //console.log(res);
   return res;
 };
 
@@ -76,4 +82,10 @@ export const getSourceValues = ({
     }
   }
   return { source_from_index, source_to_index };
+};
+
+export const getPaddingByIndent = ({ indent }: { indent: number }) => {
+  const padding = indent * 3;
+
+  return `${padding}rem`;
 };
