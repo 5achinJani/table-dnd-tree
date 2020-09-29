@@ -1,4 +1,11 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/482ae36a-0da2-40ea-a5d1-f2562c603d18/deploy-status)](https://app.netlify.com/sites/5achinjani-table-dnd-tree/deploys) 
+
+
+[Demo](https://5achinjani-table-dnd-tree.netlify.app/).
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 
 ## Available Scripts
 
@@ -46,4 +53,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Todos
 - Improve styling.
-- add unit test cases for reorder functions
+- Add unit test cases for reorder functions
+- Style: DnD: Drop target place status 
