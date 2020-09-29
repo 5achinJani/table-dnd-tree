@@ -22,33 +22,29 @@ import cuid from "cuid";
 const dataSource = [
   {
     id: "0",
-    body: "Mike",
+    body: "Numbers",
     indent: 0,
   },
   {
     id: "1",
-    body: "John",
-    indent: 0,
-  },
-  {
-    id: "2",
-    body: "Cena",
+    body: "Count to determine the number of objects in a set",
     indent: 1,
   },
   {
+    id: "2",
+    body: "Measurment",
+    indent: 0,
+  },
+  {
     id: "3",
-    body: "Cena1",
-    indent: 2,
+    body: "Use simple fraction names in real life situation",
+    indent: 1,
   },
   {
     id: "4",
-    body: "Sachin",
-    indent: 0,
-  },
-  {
-    id: "5",
-    body: "Max",
-    indent: 0,
+    body:
+      "Describe observation about events and objects in real life situation",
+    indent: 2,
   },
 ];
 
@@ -159,11 +155,15 @@ export const TableContainer = () => {
               hover
               responsive
               ref={provided.innerRef}
-              style={{ width: "100%", tableLayout: "fixed" }}
+              style={{ width: "100%" }}
             >
               <thead>
-                <tr className="d-flex">
-                  <th scope="col" className="col-1">
+                <tr>
+                  <th
+                    scope="col"
+                    className="actionCol"
+                    style={{ width: "160px", minWidth: "160px" }}
+                  >
                     <div>Actions</div>
                     <div
                       className="font-weight-lighter"
@@ -172,7 +172,7 @@ export const TableContainer = () => {
                       Move, Indent, Outdent, Delete
                     </div>
                   </th>
-                  <th scope="col" className="col-11">
+                  <th scope="col">
                     <div>Standard</div>
                     <div
                       className="font-weight-lighter"
@@ -195,9 +195,8 @@ export const TableContainer = () => {
                             ...provided.draggableProps.style,
                           }}
                           key={row.id}
-                          className="d-flex"
                         >
-                          <td className="col-1">
+                          <td style={{ minWidth: "160px" }}>
                             <div className="d-flex justify-content-around align-items-center">
                               <div className="" {...provided.dragHandleProps}>
                                 <AiOutlineDrag title="Move" />
@@ -238,14 +237,14 @@ export const TableContainer = () => {
                             </div>
                           </td>
 
-                          <td className="col-11">
+                          <td style={{ width: "100%" }}>
                             <div
                               style={{
                                 paddingLeft: getPaddingByIndent({
                                   indent: row.indent,
                                 }),
                               }}
-                              className="h-100 w-25 d-flex justify-content-around align-items-center"
+                              className="h-100 d-flex justify-content-around align-items-center"
                             >
                               <div
                                 title="indent size"
@@ -260,7 +259,8 @@ export const TableContainer = () => {
                               <input
                                 type="text"
                                 className="form-control"
-                                style={{ border: "none" }}
+                                placeholder="Text of the Standard"
+                                style={{ border: "none", minWidth: "250px" }}
                                 value={row.body}
                                 onChange={(event) => {
                                   onChange({
@@ -280,16 +280,18 @@ export const TableContainer = () => {
                 {provided.placeholder}
               </tbody>
               <tfoot>
-                <tr className="col-12 d-flex justify-content-center align-items-center">
-                  <Button
-                    variant="primary"
-                    className="d-flex justify-content-center align-items-center btn-block"
-                    onClick={() => {
-                      onAdd();
-                    }}
-                  >
-                    <MdAddCircleOutline className="mr-1" /> Add Standard
-                  </Button>
+                <tr>
+                  <td colSpan={2}>
+                    <Button
+                      variant="primary"
+                      className="btn-block"
+                      onClick={() => {
+                        onAdd();
+                      }}
+                    >
+                      <MdAddCircleOutline className="mr-1" /> Add Standard
+                    </Button>
+                  </td>
                 </tr>
               </tfoot>
             </Table>

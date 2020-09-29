@@ -5,9 +5,7 @@ export const IndexPage = () => {
   return (
     <Fragment>
       <Container fluid>
-        <Row>
-          <TableContainer />
-        </Row>
+        <TableContainer />
       </Container>
     </Fragment>
   );
