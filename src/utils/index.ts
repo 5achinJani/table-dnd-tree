@@ -29,7 +29,7 @@ export const moveArrayElements = (params: IMoveArrayItemsParams) => {
     );
     return array;
   }
-  if (source_from_index == target_index && source_to_index == target_index) {
+  if (source_from_index === target_index && source_to_index === target_index) {
     console.log("All same");
     return array;
   }

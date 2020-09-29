@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Container, Row, Col } from "../components/react-bootstrap";
+import { Container } from "../components/react-bootstrap";
 import { TableContainer } from "../containers/TableContainer";
 export const IndexPage = () => {
   return (

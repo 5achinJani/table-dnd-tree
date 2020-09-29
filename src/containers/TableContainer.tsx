@@ -1,8 +1,8 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { IData } from "../types";
-import { Table, Row, Button } from "../components/react-bootstrap";
+import { Table, Button } from "../components/react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { IDataRow } from "../types";
+// import { IDataRow } from "../types";
 import {
   getPaddingByIndent,
   getSourceValues,
@@ -103,7 +103,7 @@ export const TableContainer = () => {
   };
 
   const onOutdent = ({ index }: { index: number }) => {
-    if (data[index].indent == 0) {
+    if (data[index].indent === 0) {
       return;
     }
 
@@ -125,7 +125,7 @@ export const TableContainer = () => {
     } = result;
 
     console.log({ source_index, destination_index });
-    if (source_index == destination_index) {
+    if (source_index === destination_index) {
       return;
     }
 
